@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    container_name: nestjs-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: workstream24
+      DATABASE_NAME: blacklist
+
+  db:
+    image: postgres:13
+    container_name: blacklist
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: workstream24
+      POSTGRES_DB: blacklist
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
